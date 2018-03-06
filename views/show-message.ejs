@@ -1,0 +1,9 @@
+<% messages.forEach(function(message){%>
+<% if(message.type == 'at'){%>
+<% include public/at %>
+<%}else if(message.type == 'reply'){%>
+<% include public/reply %>
+<%}else if(message.type == 'comment'){%>
+<% include public/comment %>
+<%}%>
+<%})%>

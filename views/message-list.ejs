@@ -1,0 +1,79 @@
+<div class="aw-container-wrap" ng-app="messageApp" ng-controller="messageController">
+    <div class="container">
+        <div class="row">
+            <div class="aw-content-wrap clearfix">
+                <div class="col-sm-12 col-md-9 aw-main-content">
+                    <!--文章的检索-->
+                    <ul class="nav nav-tabs aw-nav-tabs active hidden-xs">
+                        <li>
+                            <a href="#read" data-toggle="tab">已读</a>
+                        </li>
+                        <li class="active">
+                            <a href="#no_read" data-toggle="tab">未读</a>
+                        </li>
+                        <h2 class="hidden-xs">
+                            <i class="fa fa-bell-o"></i>
+                            消息
+                        </h2>
+                    </ul>
+                    <!--文章的检索-->
+                    <!--文章列表-->
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="no_read">
+                            <div class="aw-mod aw-explore-list">
+                               <%if(no_read && no_read.length > 0){%>
+                               <div style="margin:20px 0">
+                                   <button ng-click="allRead()" class="btn btn-success pull-left">
+                                       全部已读
+                                   </button>
+                               </div>
+                               <%}%>
+                               <div class="aw-common-list">
+                                   <% if(no_read && no_read.length > 0){ %>
+                                   <% no_read.forEach(function(message,index){%>
+                                   <% if(message.type == 'at'){%>
+                                   <% include public/unat %>
+                                   <% }else if(message.type == 'reply'){%>
+                                   <% include public/unreply %>
+                                   <%}else if(message.type == 'comment'){%>
+                                   <% include public/uncomment %>
+                                   <%}%>
+                                   <% }) %>
+                                   <% }else{ %>
+                                   <br>
+                                   <p>没有未读消息...</p>
+                                   <% } %>
+                               </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="read">
+                            <div class="aw-mod aw-explore-list">
+                                <div class="aw-common-list">
+                                    <% if(read && read.length > 0){ %>
+                                    <% read.forEach(function(message,index){%>
+                                    <% if(message.type == 'at'){%>
+                                    <% include public/at %>
+                                    <% }else if(message.type == 'reply'){ %>
+                                    <% include public/reply %>
+                                    <%}else if(message.type == 'comment'){%>
+                                    <% include public/comment %>
+                                    <%}%>
+                                    <% }) %>
+                                    <% include public/message-page %>
+                                    <% }else{ %>
+                                    <br>
+                                    <p>没有已读消息...</p>
+                                    <%}%>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--侧边栏-->
+                <div class="col-sm-12 col-md-3 aw-side-bar hidden-xs hidden-sm">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,34 @@
+<div class="aw-comment-box hide">
+    <!--if(user){}else{}-->
+    <%if(user){%>
+        <div class="aw-comment-list" style="border-bottom:0;">
+        <div align="center" class="aw-padding10" style="border-bottom:1px solid #F5F5F5;">
+            <p><%= reply.comment_num %>条评论</p>
+            <!----------------------------这个是点击评论出来的二级回复页面------------------------------>
+        </div>
+        <div class="loading text-center" style="font-size:30px;line-height:50px;">
+            <i class="fa fa-spinner fa-pulse"></i>
+        </div>
+        <!--二级回复要插入的位置-->
+        <div class="add-comment-list"></div>
+        <form action="/<%= question._id %>/comment" style="background:none;padding:10px 0px">
+            <input type="hidden" name="reply_id" value="<%= reply._id %>">
+            <input type="hidden" name="comment_target_id" value="">
+            <div class="aw-comment-box-main">
+                <div style="white-space: pre" class="comment_markdown pull-left public" placeholder="请写下你的评论..." contenteditable="true"></div>
+                <span class="pull-right">
+                    <input type="submit" class="commentBtn btn btn btn-success commentBtn-one" disabled>
+                </span>
+                <div class="clearfix"></div>
+            </div>
+        </form>
+    </div>
+    <%}else{%>
+    <div class="aw-comment-list" style="border-bottom:0;">
+        <div align="center" class="aw-padding10" style="border-bottom:1px solid #F5F5F5;">
+            <p>点击进行 <a  href="/login">登录</a> 即可查看</p>
+            <!----------------------------这个是点击评论出来的二级回复页面------------------------------>
+        </div>
+    </div>
+    <%}%>
+</div>

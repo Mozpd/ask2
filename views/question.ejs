@@ -1,0 +1,162 @@
+<div class="aw-container-wrap" ng-app="questionApp" ng-controller="questionController">
+    <div class="container">
+        <div class="row">
+            <div class="aw-content-wrap clearfix">
+                <div class="col-sm-12 col-md-9 aw-main-content">
+                    <!--话题-->
+                    <div class="aw-mod aw-topic-bar">
+                        <div class="clearfix">
+                            <span class="topic-tag">
+                                <a href="#" class="text">
+                                    <%= question.categoryName %>
+                                </a>
+                            </span>
+                        </div>
+                    </div>
+                    <!--话题-->
+                    <!--问题主体-->
+                    <div class="aw-mod aw-question-detail">
+                        <div class="mod-head">
+                            <h1><%= question.title %></h1>
+                            <%if(followQ != '123'){%>
+                            <div class="operate clearfix followQ2" target="<%= followQ %>" target2="<%= question._id%>" >
+                                <a href="#" class="followQ btn btn-normal btn-success pull-left " >
+                                    <% if(followQ){%>
+                                    <span>关注</span> <em>|</em> <b><%=question.follow_num%></b>
+                                    <%}else{%>
+                                    <span>取消关注</span> <em>|</em> <b><%=question.follow_num%></b>
+                                    <%}%>
+                                </a>
+                            </div>
+                            <%}%>
+                        </div>
+                        <div class="mod-body">
+                            <div class="content markitup-box">
+                                <%- markdown(question.content) %>
+                            </div>
+                        </div>
+                        <div class="mod-footer">
+                            <div class="meta">
+                                <span class="text-color-999"><%= question.create_time_ago() %></span>
+                                <a class="aw-add-comment text-color-999">
+                                    <i class="fa fa-commenting-o"></i>&nbsp;添加评论
+                                </a>
+                                <a class="text-color-999">
+                                    <i class="fa fa-envelope-o"></i>&nbsp;邀请
+                                </a>
+                                <% if(currentUser !='456'){%>  <!--判断用户是否登录-->
+                                <% if(question.author._id == currentUser._id){%>
+                                <a class="text-color-999 Aedit" href="/question/<%= question._id%>/edit">
+                                    <i class="fa fa-edit"></i>&nbsp;编辑
+                                </a>
+                                <a class="text-color-999  delete">
+                                    <span target1="<%= question._id %>"></span>
+                                    <i class="fa fa-trash"></i>&nbsp;删除
+                                </a>
+                                <%}%>
+                                <%}%>
+                                <div class="pull-right more-operate">
+                                    <a href="#" class="text-color-999">
+                                        <i class="fa fa-heart-o"></i>&nbsp;感谢
+                                    </a>
+                                    <a href="javascript:void(0)" class="text-color-999 share">
+                                        <i class="fa fa-paper-plane"></i>&nbsp;分享
+                                    </a>
+                                    <div class="share-demo">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--问题主体-->
+                    <% include public/reply-list %>
+                    <!--编辑器-->
+                    <%if(user){%>
+                    <div class="aw-mod aw-replay-box">
+                        <form id="reply_form" target="/<%= question._id %>/reply" ng-submit="postForm()">
+                            <div class="mod-head">
+                                <a href="/user/<%= user.name %>" class="aw-user-name">
+                                    <img src="<%= user.avatar %>">
+                                </a>
+                                <p>
+                                    <%= user.name %>
+                                </p>
+                            </div>
+
+                            <div class="mod-body">
+                                <div class="aw-mod aw-editor-box">
+                                    <div class="mod-head" style="border:0">
+                                        <div class="wmd-panel">
+                                            <textarea id="reply_markdown">
+
+                                            </textarea>
+                                        </div>
+                                    </div>
+                                    <div class="mod-body clearfix">
+                                        <span class="pull-right">
+                                            <button id="reply_button" type="submit" class="btn btn-normal btn-success">回复</button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <%}%>
+                    <!--编辑器-->
+                </div>
+                <div class="col-md-3 aw-side-bar hidden-xs hidden-sm">
+                    <!--个人信息-->
+                    <div class="aw-mod">
+                        <div class="mod-head">
+                            <h3>发起人</h3>
+                        </div>
+                        <div class="mod-body">
+                            <dl>
+                                <dt class="pull-left aw-border-radius-5">
+                                    <a href="/user/<%= question.author.name%>"><img src="<%= question.author.avatar %>"></a>
+                                </dt>
+                                <dd class="pull-left">
+                                    <a class="aw-user-name" href="/user/<%= question.author.name%>">
+                                        <%= question.author.name %>
+                                    </a>
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="mod-footer">
+                            <%= question.author.motto %>
+                        </div>
+                    </div>
+                    <!--相关问题-->
+                    <div class="aw-mod">
+                        <div class="mod-head">
+                            <h3>相关问题</h3>
+                        </div>
+                        <div class="mod-body font-size-12">
+                            <ul>
+                                <% others.forEach(function(other){%>
+                                <li>
+                                    <a href="/question/<%= other._id %>">
+                                        <%= other.title %>
+                                    </a>
+                                </li>
+                                <% }) %>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--<link rel="stylesheet" href="/stylesheets/share.css">-->
+<!--引入分享的js-->
+<script type="text/javascript" src="/javascripts/share.js"></script>
+<script  type="text/javascript">
+    $('.share').shareConfig({
+        Shade : true, //是否显示遮罩层
+        Event:'click', //触发事件
+        Content : 'Share', //内容DIV ID
+        Title : '我爱分享' //显示标题
+    });
+</script>

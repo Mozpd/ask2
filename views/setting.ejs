@@ -1,0 +1,79 @@
+<div class="aw-container-wrap" ng-app="settingApp" ng-controller="settingController">
+    <div class="container">
+        <div class="row">
+            <div class="aw-content-wrap clearfix">
+                <div class="aw-user-setting">
+                    <!--导航-->
+                    <div class="">
+                        <ul class="nav nav-tabs aw-nav-tabs active">
+                            <h2>
+                                <i class="fa fa-cog"></i>&nbsp;用户设置
+                            </h2>
+                        </ul>
+                    </div>
+                    <!--修改内容-->
+                    <div class="tab-content clearfix" style="padding-bottom:150px">
+                        <form id="<%= user._id %>" name="settingForm" ng-submit="postForm()">
+                            <div class="aw-mod">
+                                <div class="mod-body">
+                                    <!--基本信息-->
+                                    <div class="aw-mod mod-base">
+                                        <div class="mod-head">
+                                            <h3>基本信息</h3>
+                                        </div>
+                                            <div class="mod-body">
+                                                <dl>
+                                                    <dt>账号:</dt>
+                                                    <dd><%= user.name %></dd>
+                                                </dl>
+                                                <dl>
+                                                    <dt>邮箱:</dt>
+                                                    <dd><%= user.email %></dd>
+                                                </dl>
+                                                <dl>
+                                                    <dt><label>个性签名:</label></dt>
+                                                    <dd class="introduce">
+                                                        <input class="form-control" type="text" name="motto" value="<%= user.motto %>" ng-model="formData.motto" required ng-maxlength="20">
+                                                        <div style="height:20px">
+                                                            <label ng-show="settingForm.motto.$invalid && !settingForm.motto.$pristine" class="control-label text-danger" ng-cloak>
+                                                                <i class="fa fa-close"></i>
+                                                                请正确填写签名内容
+                                                            </label>
+                                                        </div>
+                                                    </dd>
+                                                </dl>
+                                                <div class="side-bar">
+                                                    <dl>
+                                                        <dt class="pull-left text-center">
+                                                            <div class="kv-avatar">
+                                                                <div class="file-loading">
+                                                                    <input id="avatar" name="avatar" type="file" target="<%= user.avatar %>" required>
+                                                                </div>
+                                                            </div>
+                                                        </dt>
+                                                        <dd style="width:200px;" class="pull-left text-center">
+                                                            <h5>头像设置</h5>
+                                                            <p>支持jpg、gif、png等格式的图片(其他的图片格式不支持)</p>
+                                                        </dd>
+                                                    </dl>
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>
+                                <div class="mod-footer clearfix">
+                                    <button type="submit" class="btn btn-large btn-success text-center">保存</button>
+                                    <div id="kv-avatar-errors-2" class="center-block text-center" style="width:800px;display:none">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<link rel="stylesheet" href="/plugins/fileinput/css/fileinput.min.css">
+<script src="/plugins/fileinput/js/fileinput.min.js"></script>
+<script src="/plugins/fileinput/js/locales/zh.js"></script>

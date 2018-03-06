@@ -1,0 +1,23 @@
+<% if(user){%>
+<div class="aw-mod">
+    <div class="mod-head">
+        <h3>个人信息</h3>
+    </div>
+    <div class="mod-body">
+        <dl>
+            <dt class="pull-left aw-border-radius-5">
+                <a href="/user/<%= user.name %>"><img src="<%= user.avatar%>"></a>
+            </dt>
+            <dd class="pull-left">
+                <a class="aw-user-name" href="/user/<%= user.name %>">
+                    <%= user.name %>
+                </a>
+                <a href="/user/<%= user.name %>" class="pull-right">更多</a>
+            </dd>
+        </dl>
+    </div>
+    <div class="mod-footer">
+        <%= user.motto %>
+    </div>
+</div>
+<%}%>

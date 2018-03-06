@@ -1,0 +1,33 @@
+<div class="aw-item">
+    <div class="mod-head">
+        <a class="anchor"></a>
+        <a class="aw-user-img aw-border-radius-5 pull-right" href="/user/<%= comment.author.name %>">
+            <img src="<%= comment.author.avatar %>">
+        </a>
+        <!--.---------------这是二级回复内容的页面--------------------------->
+        <div class="title">
+            <p>
+                <% if(comment.comment_target_id){%>
+                <a class="aw-user-name" href="/user/<%= comment.author.name %>">
+                    <%= comment.author.name %>
+                </a>
+                回复了
+                <a class="aw-user-name" href="/user/<%= comment.comment_target_id.name %>">
+                    <%= comment.comment_target_id.name %>
+                </a>
+                <%}else{%>
+                <a class="aw-user-name" href="/user/<%= comment.author.name %>">
+                    <%= comment.author.name %>
+                </a>
+                <%}%>
+            </p>
+        </div>
+    </div>
+    <div class="mod-body clearfix">
+        <div class="markitup-box"><%-  markdown(comment.content) %>
+            <span class="text-color-999 pull-right">
+                <%= comment.create_time_ago() %>
+            </span>
+        </div>
+    </div>
+</div>
